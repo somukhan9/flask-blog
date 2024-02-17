@@ -1,0 +1,21 @@
+{
+  "name": "flask-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "concurrently \"npx tailwindcss -i ./styles/styles.css -o ./src/project/static/css/styles.css --watch\" \"npx tailwindcss -i ./styles/user/styles.css -o ./src/project/apps/user/static/user/css/styles.css --watch\" \"npx tailwindcss -i ./styles/blog/styles.css -o ./src/project/apps/blog/static/blog/css/styles.css --watch\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.17",
+    "tailwindcss": "^3.4.1"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "flowbite": "^2.2.1",
+    "postcss": "^8.4.35"
+  }
+}

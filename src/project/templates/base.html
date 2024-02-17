@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+  <title>Flask Blog {% block title %}{% endblock title %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  {% block links %}{% endblock links %}
+</head>
+
+<body class="bg-gray-100">
+
+  {% include "partials/navbar.html" %}
+
+  {% include "partials/flash/_flash.html" %}
+  <main>
+
+    {% block content %}{% endblock content %}
+
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+  {% block js_scripts %}{% endblock js_scripts %}
+
+</body>
+
+</html>

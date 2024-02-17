@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}| Home{% endblock title %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('blog.static', filename='blog/css/styles.css') }}">
+{% endblock links %}
+
+{% import "blog/partials/_post_card.html" as macros %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="bg-gray-900 text-white py-20 text-center px-5 md:px-10">
+  <div class="container mx-auto">
+    <h1 class="text-4xl font-bold mb-4">Welcome to Your Blog</h1>
+    <p class="text-lg">Discover insightful articles on various topics.</p>
+  </div>
+</div>
+
+<!-- Latest Blog Posts -->
+<div class="container mx-auto my-8 md:px-10 px-5">
+  <h2 class="text-2xl font-bold mb-4">Latest Posts</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Example Blog Post Card (Repeat for each featured post) -->
+
+
+    {% for post in latest_posts %}
+    {{ macros.PostCard(post) }}
+    {% endfor %}
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white p-4">
+  <div class="container mx-auto text-center">
+    <p>&copy; 2022 Your Blog. All rights reserved.</p>
+  </div>
+</footer>
+
+{% endblock content %}

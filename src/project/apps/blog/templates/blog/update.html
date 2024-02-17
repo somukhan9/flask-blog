@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+
+{% block title %}| Update Post{% endblock title %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('blog.static', filename='blog/css/styles.css') }}">
+{% endblock links %}
+
+
+{% block content %}
+<div class="max-w-xl mx-auto bg-white p-8 my-10 rounded shadow-md">
+    <h2 class="text-2xl font-semibold mb-6">Update Post</h2>
+
+    <form action="{{ url_for('blog.update', slug=post.slug) }}" method="post" enctype="multipart/form-data">
+
+        <!-- Title Input -->
+        <div class="mb-4">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" id="title" class="form-control" value="{{ post.title }}">
+        </div>
+
+        <!-- Body Input -->
+        <div class="mb-4">
+            <label for="body" class="form-label">Body</label>
+            <textarea name="body" id="body" class="form-control">{{ post.body }}</textarea>
+        </div>
+        <!-- Summary Input -->
+        <div class="mb-4">
+            <label for="summary" class="form-label">Summary</label>
+            <textarea name="summary" id="summary" class="form-control">{{ post.summary }}</textarea>
+        </div>
+
+        <!-- Featured Image Input -->
+        <div class="mb-6">
+            <label for="featured_image" class="form-label">Featured Image</label>
+            <input type="file" name="featured_image" id="featured_image" accept="image/*" class="form-control">
+            <small class="featured_image_text"><strong>Current Image: </strong>{{ post.featured_image.split("/")[-1]
+                }}</small>
+        </div>
+
+        <!-- Category Input -->
+        <div class="mb-6">
+            <label for="category" class="form-label">Select Category</label>
+            <select name="category" id="category" class="form-control">
+                <option value="" disabled>Select Category</option>
+                {% for category in categories %}
+                {% if post.category.id == category.id %}
+                <option value="{{ category.id }}" selected>{{
+                    category.title }}
+                </option>
+                {% else %}
+                <option value="{{ category.id }}">{{
+                    category.title }}
+                </option>
+                {% endif %}
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+            class="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+            Update
+        </button>
+    </form>
+</div>
+
+{{ ckeditor.load() }}
+{{ ckeditor.config(name='body') }}
+<!-- 
+<script>
+    const imageInput = document.querySelector("#featured_image")
+    const imageSelectText = document.querySelector(".featured_image_text")
+
+    imageInput.addEventListener("change", function (event) {
+        imageSelectText.textContent = this.files.length > 0 ? this.files[0].name : `{{post.featured_image}}`
+    })
+
+</script> -->
+
+{% endblock content %}

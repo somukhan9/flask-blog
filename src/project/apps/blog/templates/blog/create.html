@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+
+{% block title %}| Create Post{% endblock title %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('blog.static', filename='blog/css/styles.css') }}">
+{% endblock links %}
+
+
+{% block content %}
+<div class="max-w-xl mx-auto bg-white p-8 my-10 rounded shadow-md">
+    <h2 class="text-2xl font-semibold mb-6">Create a New Post</h2>
+
+    <form action="{{ url_for('blog.create') }}" method="post" enctype="multipart/form-data">
+
+        {{ form.csrf_token }}
+
+        <!-- Title Input -->
+        <div class="mb-4">
+            {{ form.title.label(class="form-label") }}
+            {{ form.title(class="form-control rounded-full") }}
+            {% if form.title.errors %}
+            <ul class="errors">
+                {% for error in form.title.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <!-- Body Input -->
+        <div class="mb-4">
+            {{ form.body.label(class="form-label") }}
+            {{ form.body(class="form-control") }}
+            {% if form.body.errors %}
+            <ul class="errors">
+                {% for error in form.body.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <!-- Summary Input -->
+        <div class="mb-4">
+            {{ form.summary.label(class="form-label") }}
+            {{ form.summary(class="form-control") }}
+            {% if form.summary.errors %}
+            <ul class="errors">
+                {% for error in form.summary.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <!-- Featured Image Input -->
+        <div class="mb-6">
+            {{ form.featured_image.label(class="form-label") }}
+            {{ form.featured_image(class="form-control", accept="image/*") }}
+            {% if form.featured_image.errors %}
+            <ul class="errors">
+                {% for error in form.featured_image.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <!-- Category Input -->
+        <div class="mb-6">
+            {{ form.category.label(class="form-label") }}
+            {{ form.category(class="form-control", id="categorySelectInput") }}
+            {% if form.category.errors %}
+            <ul class="errors">
+                {% for error in form.category.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+            class="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+            Post
+        </button>
+    </form>
+</div>
+
+{{ ckeditor.load() }}
+{{ ckeditor.config(name='body') }}
+
+{% block js_scripts %}
+<script>
+    const categorySelectInput = document.querySelector("#categorySelectInput")
+    const blankOption = categorySelectInput.children[0]
+    console.log(blankOption)
+    blankOption.setAttribute("disabled", true)
+</script>
+{% endblock js_scripts %}
+
+
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% macro PostCard(post) -%}
+<div class="bg-white rounded-lg overflow-hidden shadow-md">
+    <img src="{{ post.featured_image }}" alt="Blog Post Image" class="w-full h-48 object-cover">
+    <div class="p-4">
+        <h3 class="text-xl font-bold mb-2">{{ post.title }}</h3>
+        <p class="text-gray-700">{{ post.summary[:100] }}...</p>
+        <a href="{{ url_for('blog.single_post', slug=post.slug) }}" class="text-blue-500 hover:underline">Read
+            more</a>
+    </div>
+</div>
+{%- endmacro %}
