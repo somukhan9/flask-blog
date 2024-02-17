@@ -41,7 +41,7 @@ def posts():
 
 @blog_blueprint.route("/posts/<slug>", methods=["GET"])
 def single_post(slug):
-    print(request)
+    print(request.url.split("/"))
     post = Post.query.filter_by(slug=slug).first_or_404()
     return render_template("blog/single_post.html", post=post)
 
@@ -131,6 +131,25 @@ def update(slug):
             print(str(ex.orig))
 
     return render_template("blog/update.html", post=post, categories=categories)
+
+
+@blog_blueprint.route("/delete-blog/<slug>", methods=["POST"])
+@login_required
+@is_owner
+def delete(slug):
+    post = Post.query.filter_by(slug=slug).first_or_404()
+
+    try:
+        # post.delete()
+        db.session.delete(post)
+        db.session.commit()
+        flash("Post deleted successfully!", "success")
+        return redirect(url_for("blog.posts"))
+    except Exception as ex:
+        print(ex)
+        flash("Failed to delete post!", "danger")
+
+    return render_template("blog/single_post.html", post=post)
 
 
 # Test function for testing image upload

@@ -11,7 +11,7 @@ def is_owner(f):
         post = Post.query.filter_by(slug=slug).first_or_404()
         if current_user.id != post.user_id:
             flash("This operation is forbidden for you!", "danger")
-            return redirect(url_for("blog.home"))
+            return redirect(url_for("blog.posts"))
         return f(slug, *args, **kwargs)
     # print("-------yellow---------")
     return decorated_function

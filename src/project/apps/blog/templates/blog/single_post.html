@@ -12,14 +12,14 @@
 
 <div class="md:px-10 px-5">
     <div class="max-w-2xl mx-auto mt-10 bg-white p-8 rounded shadow-md">
-
+        <a href="{{ url_for('blog.posts', slug=post.post) }}" class="text-blue-500">&laquo; Go Back</a>
         <!-- Post Title -->
         <h1 class="text-3xl font-bold mb-6">{{ post.title }}</h1>
         {% if post.user_id == current_user.id %}
         <!-- Update and delete button -->
         <div class="mb-5 flex justify-between">
             <a href="{{ url_for('blog.update', slug=post.slug) }}" class="text-blue-500">Update Post</a>
-            <form method="post" action="#" class="inline">
+            <form method="post" action="{{ url_for('blog.delete', slug=post.slug) }}" class="inline">
                 <button type="submit" class="text-red-500 ml-4">Delete Post</button>
             </form>
         </div>
