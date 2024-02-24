@@ -1,6 +1,11 @@
 <!-- Footer -->
 <footer class="bg-gray-800 text-white p-4 mt-auto">
     <div class="container mx-auto text-center">
-        <p>&copy; 2022 Your Blog. All rights reserved.</p>
+        <p>&copy; <span id="footer-year">2022</span> Your Blog. All rights reserved.</p>
     </div>
 </footer>
+
+<script>
+    const footerYear = document.getElementById("footer-year")
+    footerYear.innerText = new Date().getFullYear()
+</script>

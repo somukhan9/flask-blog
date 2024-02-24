@@ -49,6 +49,8 @@
             <h2 class="text-2xl font-bold mb-4">Comments</h2>
             <!-- Include your comments logic here -->
 
+            {% if current_user.is_authenticated %}
+
             <form action="{{ url_for('blog.single_post', slug=post.slug ) }}" method="post">
 
                 {{ form.csrf_token }}
@@ -72,6 +74,12 @@
                     Post
                 </button>
             </form>
+
+            {% else %}
+
+            <h2 class="text-lg font-medium">Please login to write your comment to this post</h2>
+
+            {% endif %}
 
             <!-- Comment Section -->
             <div class="p-4 my-5">
