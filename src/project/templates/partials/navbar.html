@@ -16,7 +16,7 @@
                 <div class="absolute hidden bg-gray-800 p-2 mt-2 space-y-2 rounded-md" id="category-dropdown">
                     {% for category in g.categories %}
                     <a href="{{ url_for('blog.category_posts', category_slug=category.slug) }}"
-                        class="text-white block">
+                        class="text-white block w-min">
                         {{ category.title }}
                     </a>
                     {% endfor %}
