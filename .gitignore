@@ -67,7 +67,7 @@ instance/
 
 # Scrapy stuff:
 .scrapy
-styles/
+# styles/
 node_modules
 migrations/
 # Sphinx documentation
