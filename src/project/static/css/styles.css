@@ -1046,14 +1046,6 @@ input[type="range"]::-ms-fill-lower {
   margin-top: auto;
 }
 
-.ml-5 {
-  margin-left: 1.25rem;
-}
-
-.ml-24 {
-  margin-left: 6rem;
-}
-
 .block {
   display: block;
 }
@@ -1642,10 +1634,6 @@ input[type="range"]::-ms-fill-lower {
 @media (min-width: 768px) {
   .md\:flex {
     display: flex;
-  }
-
-  .md\:hidden {
-    display: none;
   }
 
   .md\:w-1\/2 {
