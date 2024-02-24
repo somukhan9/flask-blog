@@ -10,16 +10,20 @@
   {% block links %}{% endblock links %}
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 min-h-screen flex flex-col">
 
   {% include "partials/navbar.html" %}
 
   {% include "partials/flash/_flash.html" %}
+
   <main>
 
     {% block content %}{% endblock content %}
 
   </main>
+
+
+  {% include "partials/footer.html" %}
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
   {% block js_scripts %}{% endblock js_scripts %}

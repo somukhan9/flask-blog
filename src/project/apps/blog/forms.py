@@ -18,3 +18,8 @@ class PostForm(FlaskForm):
     ), allow_blank=True, get_label="title", blank_text="Select Category", validators=[DataRequired()],
         blank_value="disabled",
     )
+
+
+class AddCommentForm(FlaskForm):
+    content = TextAreaField(
+        "Your Comment", validators=[DataRequired()])

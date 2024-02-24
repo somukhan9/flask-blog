@@ -10,6 +10,8 @@
 
 {% block content %}
 <div class="max-w-xl mx-auto bg-white p-8 my-10 rounded shadow-md">
+    <a href="{{ request.referrer }}" class="text-blue-500">&laquo; Go Back</a>
+
     <h2 class="text-2xl font-semibold mb-6">Update Post</h2>
 
     <form action="{{ url_for('blog.update', slug=post.slug) }}" method="post" enctype="multipart/form-data">

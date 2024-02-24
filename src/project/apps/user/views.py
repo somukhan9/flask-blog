@@ -1,10 +1,12 @@
-from sqlite3 import IntegrityError
-from flask import Blueprint, render_template, flash, redirect, request, url_for, jsonify
+from flask import Blueprint, render_template, flash, redirect, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
 from sqlalchemy.exc import IntegrityError
 
-from .forms import SignUpForm, LoginForm
+from project.apps.blog.models import Post
+from project.utils.cloudinary import delete_image, upload_image
+
+from project.apps.user.forms import SignUpForm, LoginForm, UserUpdateForm
 
 
 from project import db
@@ -48,11 +50,9 @@ def sign_up():
     if current_user.is_authenticated:
         return redirect(url_for("blog.home"))
 
-    form = SignUpForm(request.form)
-    if request.method == "POST":
-        print("POST SUBMITTED!")
+    form = SignUpForm()
+
     if request.method == "POST" and form.validate_on_submit():
-        print("---------------hello from post--------------------")
         name = form.data.get("name")
         email = form.data.get("email")
         password = form.data.get("password")
@@ -86,7 +86,55 @@ def logout():
     return redirect(url_for("user.login"))
 
 
-@user_blueprint.route("/profile", methods=["GET"])
+@user_blueprint.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
-    return render_template("user/profile.html")
+    form = UserUpdateForm()
+    user = User.query.get_or_404(current_user.id)
+
+    if request.method == "POST":
+        try:
+            name = form.name.data or current_user.name
+            email = form.email.data or current_user.email
+            profile_image = request.files.get("profile_image", None)
+
+            data = None
+
+            if profile_image:
+                # For image update I will delete the previous picture from the cloud and then upload the new one
+                filename = None
+                if user.profile_image:
+                    filename = user.profile_image.split("/")[-1]
+                    delete_image(filename, "flask-blog/user")
+                data = upload_image(profile_image, "flask-blog/user")
+
+            user.name = name
+            user.email = email
+            if data and "secure_url" in data:
+                user.profile_image = data.get("secure_url")
+
+            db.session.commit()
+            flash("Profile updated successfully!", "success")
+            return redirect(url_for("user.profile"))
+        except IntegrityError as ex:
+            violated_field = str(ex.orig).split(".")[1].split(" ")[0]
+            print(violated_field)
+            db.session.rollback()
+            if violated_field == "email":
+                flash(f"User with this email already exists!", "danger")
+        except Exception as ex:
+            print(str(ex))
+            db.session.rollback()
+
+    return render_template("user/profile.html", form=form, user=user)
+
+
+@user_blueprint.route("/posts", methods=["GET"])
+@login_required
+def user_posts():
+    page = request.args.get("page", 1, type=int)
+    per_page = request.args.get("per_page", 3, type=int)
+    posts = Post.query.filter_by(user_id=current_user.id).order_by(
+        Post.created_at.desc()).paginate(page=page, per_page=per_page, error_out=False)
+
+    return render_template("user/user_posts.html", posts=posts)

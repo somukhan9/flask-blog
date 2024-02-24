@@ -1,3 +1,5 @@
+from slugify import slugify
+
 from sqlalchemy import ForeignKey
 from project import db
 
@@ -7,8 +9,13 @@ from project.g_models import BaseModel
 class Category(BaseModel):
     __tablename__ = "category"
 
-    title = db.Column(db.String(100), nullable=False)
+    title = db.Column(db.String(100), nullable=False, unique=True)
+    slug = db.Column(db.String(150), nullable=False, unique=True)
     posts = db.relationship("Post", backref="category", lazy=True)
+
+    def __init__(self, title: str) -> None:
+        self.title = title
+        self.slug = slugify(title)
 
     def __repr__(self) -> str:
         return f"{self.title}"
@@ -20,8 +27,8 @@ class Post(BaseModel):
     title = db.Column(db.String(255), unique=True, nullable=False)
     slug = db.Column(db.String(300), unique=True, nullable=False)
     body = db.Column(db.Text(), nullable=False)
-    summary = db.Column(db.String(255), nullable=True)
-    featured_image = db.Column(db.Text(), nullable=True)
+    summary = db.Column(db.String(255), nullable=False)
+    featured_image = db.Column(db.Text(), nullable=False)
     user_id = db.Column(db.String(32), ForeignKey("user.id"), nullable=False)
     category_id = db.Column(db.String(32), ForeignKey(
         "category.id"), nullable=False)

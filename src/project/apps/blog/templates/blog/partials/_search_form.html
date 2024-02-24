@@ -1,0 +1,9 @@
+<!-- Search Form -->
+<div class="w-full flex items-center justify-center my-5">
+    <form action="{{ url_for('blog.search') }}" method="get" class="mt-4">
+        <div class="flex items-center">
+            <input type="text" name="q" placeholder="Search..." class="border rounded-md p-2 mr-2">
+            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md">Search</button>
+        </div>
+    </form>
+</div>

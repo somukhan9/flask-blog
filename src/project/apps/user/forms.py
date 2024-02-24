@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, PasswordField
+from wtforms import StringField, EmailField, PasswordField, FileField, TextAreaField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 
@@ -19,3 +19,10 @@ class LoginForm(FlaskForm):
         message="Please provide a valid email address!"), Email(message="Please provide a valid email address!")])
     password = PasswordField("Password", validators=[
                              DataRequired(message="Please give a password!")])
+
+
+class UserUpdateForm(FlaskForm):
+    name = StringField("Name")
+    email = EmailField("Email", validators=[Email(
+        message="Please provide an valid email address!")])
+    profile_image = FileField("Profile Image",)

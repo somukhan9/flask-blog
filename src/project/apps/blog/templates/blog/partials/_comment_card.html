@@ -1,0 +1,9 @@
+{% macro CommentCard(comment) -%}
+<div class="flex items-center mb-4">
+    <img src="{{ comment.author.profile_image }}" alt="{{ comment.author.name }}" class="w-10 h-10 rounded-full mr-3">
+    <div>
+        <p class="text-gray-700 font-semibold">{{ comment.author }}</p>
+        <p class="text-gray-600">{{ comment.content|safe }}</p>
+    </div>
+</div>
+{%- endmacro %}

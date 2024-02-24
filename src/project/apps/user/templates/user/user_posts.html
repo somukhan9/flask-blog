@@ -14,7 +14,7 @@
 
 <div class="container mx-auto mt-10 md:px-10 px-5">
     {% if posts.items %}
-    <h1 class="text-3xl font-bold mb-6">All Posts</h1>
+    <h1 class="text-3xl font-bold mb-6">Your Posts</h1>
 
     <!-- Post Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -27,7 +27,7 @@
     <div class="mt-8">
         <nav class="flex justify-center gap-4">
             {% if posts.has_prev %}
-            <a href="{{ url_for('blog.posts', page=posts.prev_num) }}" class="text-blue-500">&laquo; Previous</a>
+            <a href="{{ url_for('user.user_posts', page=posts.prev_num) }}" class="text-blue-500">&laquo; Previous</a>
             {% endif %}
 
             <div class="text-gray-700">
@@ -35,13 +35,14 @@
             </div>
 
             {% if posts.has_next %}
-            <a href="{{ url_for('blog.posts', page=posts.next_num) }}" class="text-blue-500">Next &raquo;</a>
+            <a href="{{ url_for('user.user_posts', page=posts.next_num) }}" class="text-blue-500">Next &raquo;</a>
             {% endif %}
         </nav>
     </div>
     {% else %}
     <h1 class="text-4xl text-center font-bold">No Post Available</h1>
     {% endif %}
+
 </div>
 
 
